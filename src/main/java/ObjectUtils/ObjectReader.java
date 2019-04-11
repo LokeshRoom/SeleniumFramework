@@ -39,7 +39,9 @@ public class ObjectReader {
             locatorValue = By.name(value);
         else if (locator.equalsIgnoreCase("partialLinkText"))
             locatorValue = By.partialLinkText(value);
-        else new Exception("objectTypeException: Please enter correct object locator type");
+        else {
+            new Exception("objectTypeException: Please enter correct object locator type");
+        }
         return locatorValue;
     }
 
