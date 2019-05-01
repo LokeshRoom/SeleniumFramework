@@ -12,6 +12,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 
 import java.awt.*;
@@ -21,7 +22,7 @@ public class Operation extends ObjectReader {
 
     private WebDriver driver;
     private JSONObject yamlJsonObject;
-    private ExtentReports extentReports = new ExtentReports();
+    private ExtentReports extentReports;
     private ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter("C:\\Users\\PlayGround\\IdeaProjects\\SeleniumProject\\Reports\\Reports.html");
     private ExtentTest extentTest;
 
@@ -76,6 +77,29 @@ public class Operation extends ObjectReader {
         webElement.click();
         extentTest.log(Status.PASS, "Clicked on element: " + element);
         extentReports.flush();
+    }
+
+    public void doubleClick(String element, String page) {
+        try {
+            WebElement webElement = this.findElement(element, page);
+            Actions actions = new Actions(driver);
+            actions.doubleClick(webElement).perform();
+            extentTest.log(Status.PASS, "Double clicked on Element" + element);
+        } catch (Exception e) {
+            extentTest.log(Status.FAIL, "Double click failed on Element:" + e);
+        }
+    }
+
+    public void rightClick(String element, String page) {
+        try {
+            WebElement webElement = this.findElement(element, page);
+            Actions actions = new Actions(driver);
+            actions.contextClick(webElement).build().perform();
+            extentTest.log(Status.PASS, "Right click on Element" + element);
+        } catch (Exception e) {
+            extentTest.log(Status.FAIL, "Right click failed on Element:" + e);
+            throw e;
+        }
     }
 
     @AfterMethod

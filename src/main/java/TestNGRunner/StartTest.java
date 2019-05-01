@@ -1,69 +1,117 @@
 package TestNGRunner;
 
+import DriverFactory.Browsers;
+import Operations.Operation;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
 
 
-public class StartTest {
-    private ExtentReports extentReports;
-    private String browser;
-    private String environment;
+public class StartTest implements ITestListener {
 
-    public StartTest(String browser, String environment) {
+    private static Browsers browser;
+    private static String env;
+    private static String yamlFile;
+    private static ExtentReports extentReports;
+    private static Operation operation;
+
+    public StartTest(Browsers browser, String env, String yamlFile) throws Exception {
         setBrowser(browser);
-        setEnvironment(environment);
+        setEnv(env);
+        setYamlFile(yamlFile);
+        operation = new Operation();
+
     }
 
-    public String getBrowser() {
+    public static Browsers getBrowser() {
         return browser;
     }
 
-    public void setBrowser(String browser) {
-        this.browser = browser;
+    public static void setBrowser(Browsers browser) throws Exception {
+        if ((System.getProperty("browser") == null))
+            StartTest.browser = browser;
+        else {
+            try {
+                StartTest.browser = Browsers.valueOf(System.getProperty("browser").toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new Exception("wrong.browser.exception: Please provide correct browser value from global variable");
+            }
+        }
+        if (browser == null) {
+            throw new Exception("wrong.browser.exception: Please provide browser value");
+        }
+        if (browser.equals(Browsers.CHROME)) {
+            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir").concat("\\Drivers\\chromedriver.exe"));
+        } else if (browser.equals(Browsers.IE)) {
+            System.setProperty("webdriver.ie.driver", System.getProperty("user.dir").concat("\\Drivers\\IEDriverServer.exe"));
+        } else if (browser.equals(Browsers.FIREFOX)) {
+            System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir").concat("\\Drivers\\geckodriver.exe"));
+        }
     }
 
-    public String getEnvironment() {
-        return environment;
+    public static String getEnv() {
+        return env;
     }
 
-    public void setEnvironment(String environment) {
-        this.environment = environment;
+    public static void setEnv(String env) {
+        StartTest.env = env;
     }
 
-    @BeforeSuite
-    public void settingConfiguration() {
+    public static String getYamlFile() {
+        return yamlFile;
+    }
+
+    public static void setYamlFile(String yamlFile) {
+        StartTest.yamlFile = yamlFile;
+    }
+
+
+    @Override
+
+    public void onTestStart(ITestResult result) {
+
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult result) {
+
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+
+    }
+
+    @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+
+    }
+
+    @Override
+    public void onStart(ITestContext context) {
         ExtentReports extentReports = new ExtentReports();
-        this.extentReports = extentReports;
+        StartTest.extentReports = extentReports;
         ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "\\Reports");
         extentReports.attachReporter(extentHtmlReporter);
+        System.out.println("------Test Started-----------");
     }
 
-    @BeforeMethod
-    public void setUp() {
-        if (!(System.getProperty("browser").isEmpty() || System.getProperty("browser") == null)) {
-            this.browser = System.getProperty("browser");
-
-            if (browser.equalsIgnoreCase("chrome")) {
-                System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir").concat("\\Drivers\\chromedriver.exe"));
-            } else if (browser.equalsIgnoreCase("ie")) {
-                System.setProperty("webdriver.ie.driver", System.getProperty("user.dir").concat("\\Drivers\\IEDriverServer.exe"));
-            } else if (browser.equalsIgnoreCase("firefox")) {
-                System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir").concat("\\Drivers\\geckodriver.exe"));
-            } else new Exception("wrong.browser.exception: Please provide correct browser value");
-        } else if (!(browser == null || browser.isEmpty())) {
-            if (browser.equalsIgnoreCase("chrome")) {
-                System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir").concat("\\Drivers\\chromedriver.exe"));
-            } else if (browser.equalsIgnoreCase("ie")) {
-                System.setProperty("webdriver.ie.driver", System.getProperty("user.dir").concat("\\Drivers\\IEDriverServer.exe"));
-            } else if (browser.equalsIgnoreCase("firefox")) {
-                System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir").concat("\\Drivers\\geckodriver.exe"));
-            } else new Exception("wrong.browser.exception: Please provide correct browser value");
-
-        }
-
-
+    @Override
+    public void onFinish(ITestContext context) {
+        extentReports.flush();
     }
+
+
 }
+
+
+
+
 
