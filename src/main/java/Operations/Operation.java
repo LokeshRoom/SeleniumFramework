@@ -2,6 +2,7 @@ package Operations;
 
 
 import ObjectUtils.ObjectReader;
+import TestNGRunner.StartTest;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -15,25 +16,28 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.util.logging.Logger;
+
 
 public class Operation extends ObjectReader {
 
     private WebDriver driver;
     private JSONObject yamlJsonObject;
     private ExtentReports extentReports;
-    private ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter("C:\\Users\\PlayGround\\IdeaProjects\\SeleniumProject\\Reports\\Reports.html");
+    private Logger logger = Logger.getLogger(StartTest.class.getName());
     private ExtentTest extentTest;
-
+    private ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "\\Reports\\Reports.html");
     public Operation() throws Exception {
-        System.setProperty("webdriver.driver.chromedriver", "C:\\Users\\PlayGround\\IdeaProjects\\SeleniumProject\\chromedriver.exe");
+        System.setProperty("webdriver.driver.chromedriver", System.getProperty("user.dir") + "\\Drivers\\chromedriver.exe");
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        extentReports = new ExtentReports();
         extentReports.attachReporter(extentHtmlReporter);
         extentTest = extentReports.createTest("My Test Case Name");
-        this.setYamlJsonObject("Objects.yaml", "C:\\Users\\PlayGround\\IdeaProjects\\SeleniumProject\\");
+        this.setYamlJsonObject("Objects.yaml", System.getProperty("user.dir") + "\\src\\main\\java\\ObjectUtils\\");
 
     }
+
 
     public JSONObject getYamlJsonObject() {
         return yamlJsonObject;
@@ -51,6 +55,7 @@ public class Operation extends ObjectReader {
         String url = ObjectReader.getUrl(yamlJsonObject, urlObject);
         driver.get(url);
         extentTest.log(Status.PASS, "Launched Url: " + url);
+        logger.info("Launched Url:" + url);
 
     }
 
@@ -62,14 +67,11 @@ public class Operation extends ObjectReader {
     public void enterText(String element, String page, CharSequence text) throws Exception {
         WebElement webElement = this.findElement(element, page);
         webElement.sendKeys(text);
-        Robot robot = new Robot();
-        BufferedImage bufferedImage = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
         TakesScreenshot screenshot = (TakesScreenshot) driver;
         String scrst = screenshot.getScreenshotAs(OutputType.BASE64);
-
         extentTest.log(Status.PASS, "Enterted Text: " + text);
-
-        extentTest.addScreenCaptureFromBase64String(bufferedImage.toString());
+        extentTest.addScreenCaptureFromBase64String(scrst);
+        logger.info("Enterted Text: " + text + " in  object: " + element + " page: " + page);
     }
 
     public void click(String element, String page) {

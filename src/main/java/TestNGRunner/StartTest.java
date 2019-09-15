@@ -15,6 +15,11 @@ public class StartTest implements ITestListener {
     private static String env;
     private static String yamlFile;
     private static ExtentReports extentReports;
+
+    public Operation getOperation() {
+        return operation;
+    }
+
     private static Operation operation;
 
     public StartTest(Browsers browser, String env, String yamlFile) throws Exception {

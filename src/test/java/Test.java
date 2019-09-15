@@ -1,18 +1,27 @@
 
 import DriverFactory.Browsers;
+import Operations.Operation;
 import TestNGRunner.StartTest;
+import org.openqa.selenium.Keys;
 
 //@Listeners({StartTest.class})
 
 public class Test {
-    StartTest startTest = new StartTest(Browsers.CHROME, "QA", "Objects.yaml");
+    private StartTest startTest = new StartTest(Browsers.CHROME, "QA", "Objects.yaml");
 
     public Test() throws Exception {
     }
 
-    @org.testng.annotations.Test
-    public void main() {
+    @org.testng.annotations.Test(description = "Launching Google Home page")
+    public void main() throws Exception {
         System.out.println(StartTest.getBrowser());
         System.out.println(StartTest.getEnv());
+        Operation operation = startTest.getOperation();
+        operation.goToUrl("Google_HomepageURL");
+        operation.enterText("txt_SearchBox", "Google_HomePage", "Lokesh Kumar K");
+        operation.enterText("txt_SearchBox", "Google_HomePage", Keys.ENTER);
+
+        operation.exit();
+
     }
 }
