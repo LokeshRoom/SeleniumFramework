@@ -4,6 +4,7 @@ import DriverFactory.Browsers;
 import Operations.Operation;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -48,11 +49,13 @@ public class StartTest implements ITestListener {
             throw new Exception("wrong.browser.exception: Please provide browser value");
         }
         if (browser.equals(Browsers.CHROME)) {
-            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir").concat("\\Drivers\\chromedriver.exe"));
+            WebDriverManager.chromedriver().setup();
         } else if (browser.equals(Browsers.IE)) {
-            System.setProperty("webdriver.ie.driver", System.getProperty("user.dir").concat("\\Drivers\\IEDriverServer.exe"));
+            WebDriverManager.iedriver().setup();
         } else if (browser.equals(Browsers.FIREFOX)) {
-            System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir").concat("\\Drivers\\geckodriver.exe"));
+            WebDriverManager.firefoxdriver().setup();
+        } else if (browser.equals(Browsers.EDGE)) {
+            WebDriverManager.edgedriver().setup();
         }
     }
 
@@ -76,7 +79,7 @@ public class StartTest implements ITestListener {
     @Override
 
     public void onTestStart(ITestResult result) {
-
+        System.out.println("Test Started: " + result.getTestName());
     }
 
     @Override

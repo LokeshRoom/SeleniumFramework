@@ -13,6 +13,9 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
 
@@ -28,13 +31,26 @@ public class Operation extends ObjectReader {
     private ExtentTest extentTest;
     private ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "\\Reports\\Reports.html");
     public Operation() throws Exception {
-        System.setProperty("webdriver.driver.chromedriver", System.getProperty("user.dir") + "\\Drivers\\chromedriver.exe");
-        driver = new ChromeDriver();
+        switch (StartTest.getBrowser()) {
+            case CHROME:
+                driver = new ChromeDriver();
+                break;
+            case IE:
+                driver = new InternetExplorerDriver();
+                break;
+            case EDGE:
+                driver = new EdgeDriver();
+                break;
+            case FIREFOX:
+                driver = new FirefoxDriver();
+                break;
+        }
+
         driver.manage().window().maximize();
         extentReports = new ExtentReports();
         extentReports.attachReporter(extentHtmlReporter);
         extentTest = extentReports.createTest("My Test Case Name");
-        this.setYamlJsonObject("Objects.yaml", System.getProperty("user.dir") + "\\src\\main\\java\\ObjectUtils\\");
+        this.setYamlJsonObject(StartTest.getYamlFile(), System.getProperty("user.dir") + "\\src\\test\\ObjectRepository\\");
 
     }
 

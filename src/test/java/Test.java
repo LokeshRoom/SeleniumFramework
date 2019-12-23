@@ -7,7 +7,7 @@ import org.openqa.selenium.Keys;
 //@Listeners({StartTest.class})
 
 public class Test {
-    private StartTest startTest = new StartTest(Browsers.CHROME, "QA", "Objects.yaml");
+    private StartTest startTest = new StartTest(Browsers.FIREFOX, "QA", "Objects.yaml");
 
     public Test() throws Exception {
     }

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="tests">
-    <listeners>
-        <listener class-name="TestNGRunner.StartTest"></listener>
-    </listeners>
     <test name="test">
-        <classes>
-            <class name="Test"></class>
-            <class name="TestNGRunner.StartTest"></class>
-        </classes>
+        <packages>
+            <package name="Operations"></package>
+        </packages>
     </test>
 </suite>
