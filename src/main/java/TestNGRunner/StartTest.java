@@ -24,6 +24,7 @@ public class StartTest implements ITestListener {
     private static Operation operation;
 
     public StartTest(Browsers browser, String env, String yamlFile) throws Exception {
+        System.out.println(System.getProperty("browser"));
         setBrowser(browser);
         setEnv(env);
         setYamlFile(yamlFile);
@@ -48,13 +49,13 @@ public class StartTest implements ITestListener {
         if (browser == null) {
             throw new Exception("wrong.browser.exception: Please provide browser value");
         }
-        if (browser.equals(Browsers.CHROME)) {
+        if (StartTest.browser.equals(Browsers.CHROME)) {
             WebDriverManager.chromedriver().setup();
-        } else if (browser.equals(Browsers.IE)) {
+        } else if (StartTest.browser.equals(Browsers.IE)) {
             WebDriverManager.iedriver().setup();
-        } else if (browser.equals(Browsers.FIREFOX)) {
+        } else if (StartTest.browser.equals(Browsers.FIREFOX)) {
             WebDriverManager.firefoxdriver().setup();
-        } else if (browser.equals(Browsers.EDGE)) {
+        } else if (StartTest.browser.equals(Browsers.EDGE)) {
             WebDriverManager.edgedriver().setup();
         }
     }

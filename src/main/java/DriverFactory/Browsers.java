@@ -1,5 +1,5 @@
 package DriverFactory;
 
 public enum Browsers {
-    TEST, CHROME, IE, FIREFOX, EDGE
+    CHROME, IE, FIREFOX, EDGE
 }

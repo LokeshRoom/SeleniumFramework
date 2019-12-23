@@ -14,8 +14,9 @@ public class Test {
 
     @org.testng.annotations.Test(description = "Launching Google Home page")
     public void main() throws Exception {
-        System.out.println(StartTest.getBrowser());
-        System.out.println(StartTest.getEnv());
+
+        System.out.println("Browser: " + StartTest.getBrowser());
+        System.out.println("Environment: " + StartTest.getEnv());
         Operation operation = startTest.getOperation();
         operation.goToUrl("Google_HomepageURL");
         operation.enterText("txt_SearchBox", "Google_HomePage", "Lokesh Kumar K");
