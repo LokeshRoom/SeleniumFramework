@@ -1,13 +1,13 @@
 
-import DriverFactory.Browsers;
-import Operations.Operation;
-import TestNGRunner.StartTest;
+import driverfactory.Browsers;
+import operations.Operation;
 import org.openqa.selenium.Keys;
+import testngrunner.StartTest;
 
-//@Listeners({StartTest.class})
 
 public class Test {
-    private StartTest startTest = new StartTest(Browsers.FIREFOX, "QA", "Objects.yaml");
+
+    StartTest startTest = new StartTest(Browsers.FIREFOX, "QA", "Objects.yaml");
 
     public Test() throws Exception {
     }

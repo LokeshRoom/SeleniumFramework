@@ -1,12 +1,14 @@
-package Operations;
+package operations;
 
 
-import ObjectUtils.ObjectReader;
-import TestNGRunner.StartTest;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import objectutils.ObjectReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -18,8 +20,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
+import testngrunner.StartTest;
 
-import java.util.logging.Logger;
+import java.io.File;
 
 
 public class Operation extends ObjectReader {
@@ -27,7 +30,8 @@ public class Operation extends ObjectReader {
     private WebDriver driver;
     private JSONObject yamlJsonObject;
     private ExtentReports extentReports;
-    private Logger logger = Logger.getLogger(StartTest.class.getName());
+
+    private Logger logger = LogManager.getLogger("Operation");
     private ExtentTest extentTest;
     private ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "\\Reports\\Reports.html");
     public Operation() throws Exception {
@@ -51,7 +55,12 @@ public class Operation extends ObjectReader {
         extentReports.attachReporter(extentHtmlReporter);
         extentTest = extentReports.createTest("My Test Case Name");
         this.setYamlJsonObject(StartTest.getYamlFile(), System.getProperty("user.dir") + "\\src\\test\\ObjectRepository\\");
+        LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
+        File file = new File(System.getProperty("user.dir") + "\\src\\java\\log4j2.xml");
 
+// this will force a reconfiguration
+        context.setConfigLocation(file.toURI());
+        // System.setProperty("log4j.configurationFile",System.getProperty("user.dir") + "\\src\\java\\Operations\\log4j2.xml");
     }
 
 
@@ -63,7 +72,7 @@ public class Operation extends ObjectReader {
         this.yamlJsonObject = ObjectReader.readYaml(fileName, path);
     }
 
-    private WebElement findElement(String element, String page) {
+    private WebElement findElement(String element, String page) throws Exception {
         return driver.findElement(ObjectReader.getElement(yamlJsonObject, element, page));
     }
 
@@ -90,7 +99,7 @@ public class Operation extends ObjectReader {
         logger.info("Enterted Text: " + text + " in  object: " + element + " page: " + page);
     }
 
-    public void click(String element, String page) {
+    public void click(String element, String page) throws Exception {
         WebElement webElement = this.findElement(element, page);
         webElement.click();
         extentTest.log(Status.PASS, "Clicked on element: " + element);
@@ -108,7 +117,7 @@ public class Operation extends ObjectReader {
         }
     }
 
-    public void rightClick(String element, String page) {
+    public void rightClick(String element, String page) throws Exception {
         try {
             WebElement webElement = this.findElement(element, page);
             Actions actions = new Actions(driver);

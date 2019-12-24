@@ -1,20 +1,25 @@
-package TestNGRunner;
+package testngrunner;
 
-import DriverFactory.Browsers;
-import Operations.Operation;
 import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import driverfactory.Browsers;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+import operations.Operation;
 
 
-public class StartTest implements ITestListener {
+public class StartTest {
 
     private static Browsers browser;
     private static String env;
     private static String yamlFile;
+
+    public static ExtentReports getExtentReports() {
+        return extentReports;
+    }
+
+    public static void setExtentReports(ExtentReports extentReports) {
+        StartTest.extentReports = extentReports;
+    }
+
     private static ExtentReports extentReports;
 
     public Operation getOperation() {
@@ -41,9 +46,9 @@ public class StartTest implements ITestListener {
             StartTest.browser = browser;
         else {
             try {
-                StartTest.browser = Browsers.valueOf(System.getProperty("browser").toUpperCase());
+                StartTest.browser = Browsers.valueOf((System.getProperty("browser").toUpperCase()));
             } catch (IllegalArgumentException e) {
-                throw new Exception("wrong.browser.exception: Please provide correct browser value from global variable");
+                throw new Exception("wrong.browser.exception: Please provide correct browser value from global variable\n" + e);
             }
         }
         if (browser == null) {
@@ -75,48 +80,6 @@ public class StartTest implements ITestListener {
     public static void setYamlFile(String yamlFile) {
         StartTest.yamlFile = yamlFile;
     }
-
-
-    @Override
-
-    public void onTestStart(ITestResult result) {
-        System.out.println("Test Started: " + result.getTestName());
-    }
-
-    @Override
-    public void onTestSuccess(ITestResult result) {
-
-    }
-
-    @Override
-    public void onTestFailure(ITestResult result) {
-
-    }
-
-    @Override
-    public void onTestSkipped(ITestResult result) {
-
-    }
-
-    @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-
-    }
-
-    @Override
-    public void onStart(ITestContext context) {
-        ExtentReports extentReports = new ExtentReports();
-        StartTest.extentReports = extentReports;
-        ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "\\Reports");
-        extentReports.attachReporter(extentHtmlReporter);
-        System.out.println("------Test Started-----------");
-    }
-
-    @Override
-    public void onFinish(ITestContext context) {
-        extentReports.flush();
-    }
-
 
 }
 
