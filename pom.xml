@@ -24,15 +24,12 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M4</version>
                 <configuration>
+                    <parallel>methods</parallel>
+                    <threadCount>2</threadCount>
                     <systemPropertyVariables>
                         <browser>chrome</browser>
                     </systemPropertyVariables>
-                    <properties>
-                        <property>
-                            <name>listener</name>
-                            <value>testngrunner.TestNGListener</value>
-                        </property>
-                    </properties>
+                    <suiteXmlFiles>testng.xml</suiteXmlFiles>
                 </configuration>
             </plugin>
         </plugins>
@@ -61,12 +58,12 @@
         <dependency>
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>
-            <version>4.0.6</version>
+            <version>4.0.9</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.9.10</version>
+            <version>7.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

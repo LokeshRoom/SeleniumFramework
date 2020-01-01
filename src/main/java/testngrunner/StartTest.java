@@ -22,19 +22,11 @@ public class StartTest {
 
     private static ExtentReports extentReports;
 
-    public Operation getOperation() {
-        return operation;
-    }
-
-    private static Operation operation;
-
     public StartTest(Browsers browser, String env, String yamlFile) throws Exception {
         System.out.println(System.getProperty("browser"));
         setBrowser(browser);
         setEnv(env);
         setYamlFile(yamlFile);
-        operation = new Operation();
-
     }
 
     public static Browsers getBrowser() {
@@ -54,15 +46,24 @@ public class StartTest {
         if (browser == null) {
             throw new Exception("wrong.browser.exception: Please provide browser value");
         }
-        if (StartTest.browser.equals(Browsers.CHROME)) {
-            WebDriverManager.chromedriver().setup();
-        } else if (StartTest.browser.equals(Browsers.IE)) {
-            WebDriverManager.iedriver().setup();
-        } else if (StartTest.browser.equals(Browsers.FIREFOX)) {
-            WebDriverManager.firefoxdriver().setup();
-        } else if (StartTest.browser.equals(Browsers.EDGE)) {
-            WebDriverManager.edgedriver().setup();
+        switch (StartTest.browser) {
+            case CHROME:
+                WebDriverManager.chromedriver().setup();
+                break;
+            case FIREFOX:
+                WebDriverManager.firefoxdriver().setup();
+                break;
+            case EDGE:
+                WebDriverManager.edgedriver().setup();
+                break;
+            case IE:
+                WebDriverManager.iedriver().setup();
+                break;
         }
+    }
+
+    public Operation startTest() throws Exception {
+        return new Operation();
     }
 
     public static String getEnv() {

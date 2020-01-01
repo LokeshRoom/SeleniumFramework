@@ -1,8 +1,21 @@
 Objects:
   Google_HomepageURL: https://google.com
+  LinkedIN_HomepageURL: https://linkedin.com
   Google_HomePage:
     txt_SearchBox:
       name: q
+  LinkedIN_Homepage:
+    btn_SearchBox:
+      xpath: //button[normalize-space()='Find jobs, people, and more']
+    btn_People:
+      xpath: //button[normalize-space(text())='People' and starts-with(@data-tracking-control-name,'homepage')]
+    txt_FirstName:
+      xpath: //input[@name="firstName" and starts-with(@data-tracking-control-name,'homepage')]
+    txt_LastName:
+      xpath: //input[@name="lastName" and starts-with(@data-tracking-control-name,'homepage')]
+    btn_SearchPeople:
+      xpath: //button[normalize-space(text())='Search People' and starts-with(@data-tracking-control-name,'homepage')]
+
 
 
 
