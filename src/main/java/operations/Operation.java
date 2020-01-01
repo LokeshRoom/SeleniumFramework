@@ -56,11 +56,8 @@ public class Operation extends ObjectReader {
         extentTest = extentReports.createTest("My Test Case Name");
         this.setYamlJsonObject(StartTest.getYamlFile(), System.getProperty("user.dir") + "\\src\\test\\ObjectRepository\\");
         LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
-        File file = new File(System.getProperty("user.dir") + "\\src\\java\\log4j2.xml");
-
-// this will force a reconfiguration
+        File file = new File(System.getProperty("user.dir") + "\\src\\main\\java\\log4j2.xml");
         context.setConfigLocation(file.toURI());
-        // System.setProperty("log4j.configurationFile",System.getProperty("user.dir") + "\\src\\java\\Operations\\log4j2.xml");
     }
 
 
@@ -80,7 +77,7 @@ public class Operation extends ObjectReader {
         String url = ObjectReader.getUrl(yamlJsonObject, urlObject);
         driver.get(url);
         extentTest.log(Status.PASS, "Launched Url: " + url);
-        logger.info("Launched Url:" + url);
+        logger.error("Launched Url:" + url);
 
     }
 
