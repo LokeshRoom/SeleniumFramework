@@ -19,22 +19,6 @@ import java.util.List;
 
 public class ExcelReader {
 
-    public static Sheet getExcelSheet(String excelPath, String excelSheet) throws IOException {
-        File file = new File("C:\\Users\\lokesh.kk\\Desktop\\Flows\\Model9.xlsx");
-        FileInputStream fileInputStream = new FileInputStream(new File(excelPath));
-        String fileextension = file.getName().substring(file.getName().indexOf("."));
-        Sheet sheet=null;
-        if (fileextension.equalsIgnoreCase(".xls")) {
-            HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
-            sheet = workbook.getSheet(excelSheet);
-
-        } else if (fileextension.equalsIgnoreCase(".xlsx")) {
-            XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
-            sheet = workbook.getSheet(excelSheet);
-        }
-        return sheet;
-    }
-
     public static HashMap readExcelDataInMap(File file, String sheetName, int uniqueKeyColumnNumber) {
         String uniqueKey;
         HashMap entireTestData = new HashMap<>();
