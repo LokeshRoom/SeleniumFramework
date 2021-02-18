@@ -28,6 +28,7 @@
                     <threadCount>2</threadCount>
                     <systemPropertyVariables>
                         <browser>remote_chrome</browser>
+                        <retrycount>1</retrycount>
                     </systemPropertyVariables>
                     <suiteXmlFiles>testng.xml</suiteXmlFiles>
                 </configuration>
