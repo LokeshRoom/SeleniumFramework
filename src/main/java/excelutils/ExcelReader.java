@@ -23,7 +23,7 @@ public class ExcelReader {
         String uniqueKey;
         HashMap entireTestData = new HashMap<>();
         HashMap eachRowTestData;
-        String fileextension = file.getName().substring(file.getName().indexOf("."));
+        String fileextension = file.getName().substring(file.getName().lastIndexOf("."));
         List headers = new ArrayList<>();
         Sheet excelSheet = null;
 
