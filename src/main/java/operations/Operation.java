@@ -14,10 +14,15 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.json.JSONObject;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -26,6 +31,8 @@ import testngrunner.StartTest;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -41,6 +48,7 @@ public class Operation extends ObjectReader {
     ExtentTest extentTest;
 
     public Operation() throws Exception {
+
         switch (StartTest.getBrowser()) {
             case CHROME:
                 driver = new ChromeDriver();
@@ -54,6 +62,14 @@ public class Operation extends ObjectReader {
             case FIREFOX:
                 driver = new FirefoxDriver();
                 break;
+            case REMOTE_CHROME:
+                DesiredCapabilities chromeOptions= new DesiredCapabilities();
+                chromeOptions.setBrowserName(BrowserType.CHROME);
+                chromeOptions.setPlatform(Platform.LINUX);
+                chromeOptions.setAcceptInsecureCerts(true);
+                chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
+                chromeOptions.acceptInsecureCerts();
+                driver=new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),chromeOptions);
         }
 
         extentTest = reports.createTest(Thread.currentThread()

@@ -27,7 +27,7 @@
                     <parallel>methods</parallel>
                     <threadCount>2</threadCount>
                     <systemPropertyVariables>
-                        <browser>chrome</browser>
+                        <browser>remote_chrome</browser>
                     </systemPropertyVariables>
                     <suiteXmlFiles>testng.xml</suiteXmlFiles>
                 </configuration>
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.0.0-alpha-3</version>
+            <version>3.141.59</version>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
@@ -74,6 +74,21 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured-all</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.0.0</version>
         </dependency>
     </dependencies>
 

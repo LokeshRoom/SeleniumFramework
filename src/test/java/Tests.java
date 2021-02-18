@@ -9,7 +9,7 @@ public class Tests {
     public Tests() throws Exception {
     }
 
-    StartTest startTest = new StartTest(Browsers.FIREFOX, "QA", "Objects.yaml");
+    StartTest startTest = new StartTest(Browsers.REMOTE_CHROME, "QA", "Objects.yaml");
 
     @Test(description = "Launching Google Home page")
     public void google_Search() throws Exception {
@@ -19,6 +19,8 @@ public class Tests {
         operation.enterText("txt_SearchBox", "Google_HomePage", "Lokesh Kumar K");
         operation.enterText("txt_SearchBox", "Google_HomePage", Keys.ENTER);
         operation.quit();
+
+
 
     }
 
@@ -36,7 +38,48 @@ public class Tests {
 
     @Test
     public void test() {
-        long l = (long) -Math.pow(2, 63);
-        System.out.println(Math.pow(2, 63));
-    }
+        String s="aabddc";int N=0;
+        for (int i = 1; i <= s.length(); i++) {
+            N=N+2;
+            if ((N/2)+1<=i && i<=N)
+            System.out.println(i);
+        }
+
 }
+    long substrCount(int n, String st) {
+        long iPalCount = n;
+        long iSpecialCnt = 0, iCurrCount = 0, iPrevCount = 0, iPrevPrevCount = 0;
+           char[] s=st.toCharArray();
+        for(int i = 1; i < n; i++) {
+            char cPrev = s[i-1];
+            char cCurr = s[i];
+
+            if ( cPrev == cCurr ) {
+                iCurrCount++;
+                iPalCount += iCurrCount;
+
+                if ( iSpecialCnt > 0 ) {
+                    iSpecialCnt--;
+                    iPalCount++;
+                }
+            }
+            else {
+                iCurrCount = 0;
+                if ( i > 1 && (s[i-2] == cCurr) ) {
+                    iSpecialCnt = iPrevPrevCount;
+                    iPalCount++;
+                }
+                else {
+                    iSpecialCnt = 0;
+                }
+            }
+
+            if ( i > 1 ) {
+                iPrevPrevCount = iPrevCount;
+            }
+
+            iPrevCount = iCurrCount;
+        }
+
+        return iPalCount;
+    }}
