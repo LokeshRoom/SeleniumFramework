@@ -1,7 +1,6 @@
 package operations;
 
 import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 public class ExtentReporterUtils {
@@ -9,15 +8,20 @@ public class ExtentReporterUtils {
 
     private static ExtentHtmlReporter extentHtmlReporter;
 
-    private static ExtentReports extentReports = new ExtentReports();
-    public ExtentTest extentTest;
+    private static ExtentReports extentReports;
+
+    private static ExtentHtmlReporter extentHtmlReporterAPI;
+
+    private static ExtentReports extentReportsAPI;
+
 
     public static ExtentHtmlReporter getExtentHtmlReporter() {
         return extentHtmlReporter;
     }
 
     public static void setExtentHtmlReporter(ExtentHtmlReporter extentHtmlReport) {
-        extentHtmlReporter = extentHtmlReport;
+        if (extentHtmlReporter == null)
+            extentHtmlReporter = extentHtmlReport;
     }
 
     public static ExtentReports getExtentReports() {
@@ -25,15 +29,26 @@ public class ExtentReporterUtils {
     }
 
     public static void setExtentReports(ExtentReports extentReport) {
-        extentReports = extentReport;
+        if (extentReports == null)
+            extentReports = extentReport;
     }
 
-    public ExtentTest getExtentTest() {
-        return extentTest;
+
+    public static ExtentHtmlReporter getExtentHtmlReporterAPI() {
+        return extentHtmlReporterAPI;
     }
 
-    public void setExtentTest(ExtentTest extentTest) {
-        this.extentTest = extentTest;
+    public static void setExtentHtmlReporterAPI(ExtentHtmlReporter extentHtmlReportAPI) {
+        if (extentHtmlReporterAPI == null)
+            extentHtmlReporterAPI = extentHtmlReportAPI;
     }
 
+    public static ExtentReports getExtentReportsAPI() {
+        return extentReportsAPI;
+    }
+
+    public static void setExtentReportsAPI(ExtentReports extentReportAPI) {
+        if (extentReportsAPI == null)
+            extentReportsAPI = extentReportAPI;
+    }
 }

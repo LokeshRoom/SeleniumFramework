@@ -19,9 +19,11 @@ public class ObjectReader {
         return object.getJSONObject("Objects").getString(urlKey);
     }
 
-    protected static By getElement(JSONObject object, String element, String page) throws Exception {
+    protected static By getElement(JSONObject object, String element, String page,String... appendValueToXpath) throws Exception {
         String locator = object.getJSONObject("Objects").getJSONObject(page).getJSONObject(element).keys().next();
         String value = object.getJSONObject("Objects").getJSONObject(page).getJSONObject(element).getString(locator);
+        if (appendValueToXpath.length>0)
+            value=value+appendValueToXpath[0];
         By locatorValue = null;
         switch (locator.toLowerCase()) {
             case "classname":

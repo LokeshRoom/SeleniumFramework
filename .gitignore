@@ -7,3 +7,7 @@
 /SeleniumFramework.iml
 /C/target/testlogs/testlog.log
 /src/test/java/PractisePrograms/
+/.classpath
+/.project
+/.settings/
+/test-output/
